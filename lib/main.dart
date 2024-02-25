@@ -19,6 +19,13 @@ class _MyAppState extends State<MyApp> {
   var _questionIndex = 0;
   var _totaleScore = 0;
 
+  void _resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totaleScore = 0;
+    });
+  }
+
   final List _questions = const [
     {
       'questionText': 'What\'s your favorite color?',
@@ -68,24 +75,25 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-            title: Container(
-                width: double.infinity,
-                child: const Text(
-                  "Quiz App",
-                  textAlign: TextAlign.center,
-                )),
-          ),
-          body: _questionIndex <
-                  _questions
-                      .length // here we have the condition if(_questionIndex < questions.length) he will execute the Quiz widget
-              ? Quiz(
-                  answerQuestion: _answerQuestion,
-                  questionIndex: _questionIndex,
-                  questions: _questions,
-                )
-              : Result() // he the else ( if condition not true he weill execute Result screen)
-          ),
+        appBar: AppBar(
+          title: Container(
+              width: double.infinity,
+              child: const Text(
+                "Quiz App",
+                textAlign: TextAlign.center,
+              )),
+        ),
+        body: _questionIndex <
+                _questions
+                    .length // here we have the condition if(_questionIndex < questions.length) he will execute the Quiz widget
+            ? Quiz(
+                answerQuestion: _answerQuestion,
+                questionIndex: _questionIndex,
+                questions: _questions,
+              )
+            : Result(_totaleScore,
+                _resetQuiz), // here the else ( if condition not true he weill execute Result screen)
+      ),
     );
   }
 }
